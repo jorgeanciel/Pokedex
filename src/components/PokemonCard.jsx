@@ -1,6 +1,14 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { LuSword } from 'react-icons/lu';
+import { IoShieldOutline } from 'react-icons/io5';
+import { GiLifeBar } from 'react-icons/gi';
+import { LuSwords } from 'react-icons/lu';
+import { FaShieldHeart } from 'react-icons/fa6';
+import { FaPersonRunning } from 'react-icons/fa6';
+import ColorName from './colorData/ColorName';
+import BGColor from './colorData/BgColor';
 
 const getPokemonId = async (url) => {
   try {
@@ -11,7 +19,7 @@ const getPokemonId = async (url) => {
   }
 };
 
-const PokemonCard = ({ pokemonData }) => {
+const PokemonCard = ({ pokemonData, type }) => {
   const [pokemon, setPokemon] = useState(null);
   const navigate = useNavigate();
 
@@ -32,27 +40,33 @@ const PokemonCard = ({ pokemonData }) => {
       {pokemon && (
         <article
           onClick={handleClickNavigate}
-          className="hover:cursor-pointer max-w-xs border border-solid border-black  bg-white rounded-lg"
+          className="hover:cursor-pointer   border-solid border-4  bg-white rounded-lg max-w-[230px]"
+          style={{ borderColor: ColorName(pokemon.types[0].type.name) }}
         >
           <section>
-            <section className="text-center pb-6 pt-6">
-              <h2 className="text-2xl font-semibold text-red-500">
+            <section className="text-center pb-2 pt-2">
+              <h2
+                className="text-2xl font-semibold"
+                style={{ color: ColorName(pokemon.types[0].type.name) }}
+              >
                 {pokemon.name.toUpperCase()}
               </h2>
             </section>
 
-            <section className="flex justify-center align self-center">
-              <div style={{ width: 200, height: 250 }}>
+            <section
+              className="flex justify-center"
+              style={{ background: BGColor[pokemon.types[0].type.name] }}
+            >
+              <div className="m-auto h-[100px] p-2">
                 <img
-                  className="w-60"
+                  className=" h-full"
                   src={pokemon.sprites.other.dream_world.front_default}
                   alt={pokemon.name}
                 />
               </div>
             </section>
-
-            <section className="pt-6 flex gap-3 flex-wrap justify-center">
-              <div className="flex flex-col pt-2 gap-0 min-w-full">
+            <section className=" flex gap-3 flex-wrap justify-center">
+              <div className="flex flex-col gap-0 min-w-full">
                 <p className="bg-red-500 text-center text-white tracking-widest font-bold">
                   Type
                 </p>
@@ -62,9 +76,14 @@ const PokemonCard = ({ pokemonData }) => {
               </div>
               {pokemon.stats.map((stat) => (
                 <section key={stat.stat.name} className="p-0">
-                  <h3 className="bg-amber-300 pl-2 pr-2 text-rose-500">
-                    {stat.stat.name.toUpperCase()}
-                  </h3>
+                  <div>
+                    {stat.stat.name === 'attack' && <LuSword />}
+                    {stat.stat.name === 'defense' && <IoShieldOutline />}
+                    {stat.stat.name === 'hp' && <GiLifeBar />}
+                    {stat.stat.name === 'special-attack' && <LuSwords />}
+                    {stat.stat.name === 'special-defense' && <FaShieldHeart />}
+                    {stat.stat.name === 'speed' && <FaPersonRunning />}
+                  </div>
                   <p className="text-center font-bold text-rose-500">{stat.base_stat}</p>
                 </section>
               ))}

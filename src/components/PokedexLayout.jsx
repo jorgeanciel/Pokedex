@@ -11,7 +11,7 @@ const PokedexLayout = () => {
         <img className="min-w-full h-52" src="./banner-pokemon.jpg" alt="" />
 
         <button
-          className="bg-red-500 text-white p-2 hover:bg-red-400 rounded absolute"
+          className="bg-red-500 text-white p-2 hover:bg-red-400 rounded absolute top-36"
           onClick={removeUser}
         >
           Log out

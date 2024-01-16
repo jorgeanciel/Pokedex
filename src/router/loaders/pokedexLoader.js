@@ -1,4 +1,4 @@
-import { getAllPokemons } from '../../services/getAllPokemons'
+import { getAllPokemons } from '../../services/getAllPokemons';
 import { getAllTypes } from '../../services/getAllTypes';
 import { getPokemonByType } from '../../services/getPokemonByType';
 
@@ -9,8 +9,9 @@ export const pokedexLoader = async ({ request }) => {
   const name = url.searchParams.get('pokemon_name')?.toLowerCase();
   const type = url.searchParams.get('pokemon_type')?.toLowerCase();
   let pokemons;
+  console.log(type);
 
-  if (!isSearching) {
+  if (!isSearching || type === 'all-types') {
     pokemons = await getAllPokemons();
   } else if (name && type) {
     pokemons = await getPokemonByType(type);
